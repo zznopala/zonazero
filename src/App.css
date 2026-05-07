@@ -1,0 +1,891 @@
+/* --- RESET Y VARIABLES --- */
+:root {
+    --neon-fucsia: #ff00ff;
+    --neon-cyan: #00ffff;
+    --neon-yellow: #fff200;
+    --neon-purple: #bc13fe;
+    --bg-dark: #0a0a0a;
+    --surface: #1a1a1a;
+    --text-main: #ffffff;
+    --text-dim: #a0a0a0;
+    --color-disponible: #00ff88; /* Verde Neón */
+    --color-ocupado: #ff3131;    /* Rojo Neón */
+    --glow-fucsia: 0 0 10px rgba(255, 0, 255, 0.5);
+    --glow-cyan: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* --- HEADER --- */
+header {
+    height: 70px; /* Asegúrate de definir un alto fijo */
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: var(--bg-dark);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #222;
+}
+
+/* --- LOGOTIPO ZONAZERO --- */
+.brand {
+    font-family: 'Arial Black', Gadget, sans-serif; /* Fuente gruesa para impacto */
+    font-size: 1.8rem;
+    letter-spacing: -1px;
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para "ZONA" */
+.zona-text {
+    color: #000000; /* Negro sólido */
+    display: flex;
+    align-items: center;
+    background: #ffffff; /* Fondo blanco pequeño para que resalte en modo oscuro */
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 2px;
+}
+
+/* La bola 8 (O de ZONA) */
+.bola-ocho {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    margin: 0 2px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* Estilo para "ZERO" */
+.zero-text {
+    color: #00d4ff; /* Azul hielo */
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+}
+
+/* El cubo de hielo (O de ZERO) */
+.hielo {
+    font-size: 1.4rem;
+    filter: drop-shadow(0 0 5px #00d4ff);
+    margin-left: 2px;
+}
+
+.neon-fucsia { color: var(--neon-fucsia); text-shadow: var(--glow-fucsia); }
+.neon-cyan { color: var(--neon-cyan); text-shadow: var(--glow-cyan); }
+
+.theme-btn {
+    background: #222;
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* --- BARRA DE CATEGORÍAS (UBER STYLE) --- */
+.category-bar {
+    display: flex;
+    overflow-x: auto;
+    padding: 12px 15px;
+    gap: 12px;
+    background: var(--bg-dark);
+    position: sticky;
+    top: 90px; /* Justo debajo del header */
+    z-index: 999;
+    scrollbar-width: none; /* Firefox */
+}
+
+.category-bar::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.cat-pill {
+    white-space: nowrap;
+    padding: 8px 18px;
+    background: var(--surface);
+    border-radius: 25px;
+    border: 1px solid #333;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cat-pill:active {
+    transform: scale(0.95);
+}
+
+.cat-pill.active {
+    background: var(--neon-fucsia);
+    border-color: var(--neon-fucsia);
+    color: white;
+    box-shadow: var(--glow-fucsia);
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.container {
+    padding: 10px 15px 120px 15px; /* Padding bottom extra para el widget */
+    max-width: 1000px;
+    margin: auto;
+
+    
+}
+
+section {
+    scroll-margin-top: 130px; /* Ajusta este valor según el grosor de tu encabezado */
+    padding-top: 10px;        /* Un pequeño respiro visual */
+}
+
+.menu-section-title {
+    font-size: 1.3rem;
+    margin: 30px 0 15px;
+    color: var(--neon-yellow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(255, 242, 0, 0.3);
+}
+
+/* --- GRID DE PRODUCTOS --- */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .menu-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+.producto-card {
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #222;
+    cursor: pointer; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* Efecto visual al pasar el mouse (Hover) */
+@media (hover: hover) {
+    .producto-card:hover {
+        transform: translateY(-5px); /* Se levanta un poquito */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-color: var(--neon-cyan); /* El borde brilla en tu azul Zonazero */
+    }
+}
+
+.mas-info-link {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    border-color: #444;
+}
+
+.producto-img-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 80%; /* Ratio de imagen profesional */
+    background: #111;
+}
+
+.producto-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s;
+}
+
+.producto-info {
+    padding: 12px;
+}
+
+.producto-nombre {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+    color: #ff3131;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.7rem;
+}
+
+.producto-precio {
+    color: var(--neon-cyan);
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-top: 8px;
+    text-shadow: var(--glow-cyan);
+}
+
+
+.horario-info {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.btn-reservar {
+    width: 100%;
+    padding: 12px;
+    background-color: #25d366; /* Verde WhatsApp */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-reservar:active {
+    transform: scale(0.95);
+}
+
+
+
+
+.widget-header {
+    height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: 800;
+    background-color: #000;
+    color: var(--neon-cyan);
+    letter-spacing: 1px;
+}
+
+.widget-content {
+    padding: 10px;
+    background: #000000;
+}
+
+/* Tema Claro: Fondo Blanco Sólido */
+[data-theme="light"] .widget-content {
+    background-color: #ffffff !important;
+    color: #333333;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Tema Oscuro: Fondo Negro Sólido */
+[data-theme="dark"] .widget-content {
+    background-color: #000000 !important;
+    color: #ffffff;
+}
+
+.status-box {
+    display: flex;
+    
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.estado-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.bg-disponible { background: var(--neon-cyan); box-shadow: var(--glow-cyan); }
+.bg-ocupada { background: var(--neon-fucsia); box-shadow: var(--glow-fucsia); }
+
+input[type="datetime-local"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 8px;
+    font-family: inherit;
+    color-scheme: dark;
+}
+
+.btn-neon {
+    width: 100%;
+    padding: 16px;
+    background: var(--neon-cyan);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-neon:active {
+    transform: scale(0.98);
+    filter: brightness(0.8);
+}
+
+/* --- LOADER --- */
+.loader {
+    text-align: center;
+    padding: 50px;
+    color: var(--neon-fucsia);
+    font-weight: bold;
+    text-shadow: var(--glow-fucsia);
+    letter-spacing: 2px;
+}
+
+/* Ajustes por Tema */
+[data-theme="dark"] .zona-text {
+    background: #fff; /* Mantenemos el fondo blanco para que el texto negro de "ZONA" se vea */
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+[data-theme="light"] .zona-text {
+    background: transparent;
+    padding: 0;
+}
+
+/* Color de los precios y acentos en Azul Hielo para combinar */
+[data-theme="dark"] {
+    --neon-cyan: #00d4ff;
+    --neon-fucsia: #0084ff; /* Azul más profundo */
+}
+
+/* --- TEMAS (MODO CLARO) --- */
+/* --- REDISEÑO MODO CLARO (ESTILO UBER EATS) --- */
+[data-theme="light"] {
+    --bg-dark: #FFFFFF;           /* Fondo blanco puro */
+    --surface: #FFFFFF;          /* Tarjetas blancas */
+    --text-main: #1ba82e;        /* Texto negro profundo */
+    --text-dim: #545454;         /* Gris para descripciones */
+    --border-color: #EEEEEE;     /* Gris muy suave para líneas */
+    --neon-cyan: #066dc1;        /* Verde Uber Eats (opcional) o mantener Cyan suave */
+    --neon-fucsia: #E91E63;      /* Un rosa más sólido, menos neón */
+    --neon-yellow: #000000;      /* Títulos en negro para elegancia */
+    --glow-cyan: none;           /* Sin resplandor en modo claro */
+    --glow-fucsia: none;
+}
+
+/* --- AJUSTES ESPECÍFICOS PARA MODO CLARO --- */
+[data-theme="light"] body {
+    background-image: none; /* Quitamos la textura de red retro en modo claro */
+}
+
+[data-theme="light"] header {
+    border-bottom: 1px solid #E2E2E2;
+    background: #FFFFFF;
+}
+
+[data-theme="light"] .cat-pill {
+    background: #F6F6F6;
+    border: none;
+    color: #000000;
+}
+
+[data-theme="light"] .cat-pill.active {
+    background: #000000; /* Pill negra cuando está activa, muy elegante */
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+[data-theme="light"] .producto-card {
+    border: none;
+    border-radius: 0; /* Estilo más editorial */
+    border-bottom: 1px solid #EEEEEE; /* Línea divisoria en lugar de caja */
+    transition: background 0.2s;
+}
+
+[data-theme="light"] .producto-card:hover {
+    transform: none;
+    background: #F9F9F9;
+}
+
+[data-theme="light"] .producto-nombre {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+[data-theme="light"] .producto-precio {
+    color: #000000;
+    text-shadow: none;
+    font-weight: 600;
+}
+
+[data-theme="light"] .menu-section-title {
+    color: #000000;
+    text-shadow: none;
+    font-weight: 700;
+    font-size: 1.5rem;
+    border: none;
+}
+
+/* Ajuste del Widget en Modo Claro */
+[data-theme="light"] .widget-billar {
+    background: #FFFFFF;
+    border-top: 1px solid #E2E2E2;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+}
+
+[data-theme="light"] .widget-header {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+
+
+[data-theme="light"] input[type="datetime-local"] {
+    background: #F6F6F6;
+    border: 1px solid #E2E2E2;
+    color: #000000;
+    color-scheme: light;
+}
+
+
+.btn-whatsapp-pedido {
+    width: 100%; padding: 16px;
+    background-color: #25D366; /* Verde WhatsApp */
+    color: white; border: none;
+    border-radius: 12px; font-weight: 800;
+    font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+
+
+.zz-banner-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 15px;
+    scroll-snap-type: x mandatory; /* Esto ayuda a que "encaje" al desplazarse */
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth; /* Movimiento suave global */
+    margin-top: 20px;
+}
+
+.zz-banner-container::-webkit-scrollbar {
+    display: none;
+}
+
+
+.promo-card:active {
+    transform: scale(0.98); /* Efecto visual de pulsado */
+}
+
+
+.promo-card {
+    flex: 0 0 85%; /* La card ocupa el 85% del ancho para dejar ver un poco de la siguiente */
+    height: 150px;
+    background: linear-gradient(45deg, #ff00cc, #333); /* Fondo llamativo */
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    scroll-snap-align: center;
+    border: 2px solid var(--neon-cyan);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.promo-img {
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+    mask-image: linear-gradient(to right, black 70%, transparent);
+}
+
+.promo-info {
+    padding: 15px;
+    color: white;
+    width: 60%;
+}
+
+.promo-tag {
+    background: yellow;
+    color: black;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.promo-titulo {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* Mejoras de UX */
+.category-bar {
+    -webkit-overflow-scrolling: touch;
+    scroll-padding: 20px;
+}
+
+.producto-card {
+    will-change: transform; /* Optimiza animaciones en móvil */
+    backface-visibility: hidden;
+}
+
+/* Animación de carga más fluida */
+.loader {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; transform: scale(0.98); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.5; transform: scale(0.98); }
+}
+
+#widget-billar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--widget-bg);
+    border-top: 2px solid var(--neon-cyan);
+    border-radius: 20px 20px 0 0;
+    transition: all 0.4s ease-in-out;
+    overflow: hidden; /* Evita que se salgan las esquinas */
+}
+
+/* El Footer SIEMPRE visible */
+.mini-footer-widget {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    font-size: 9px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    padding: 5px;
+    order: 2;
+    text-align: center;
+    
+    /* --- CAMBIO DINÁMICO DE FONDO --- */
+    /* Usamos la variable de superficie que ya cambia en tu modo claro/oscuro */
+    background-color: var(--bg-dark); 
+    width: 100%;
+    
+    /* Aseguramos que sea totalmente opaco */
+    opacity: 1 !important;
+    z-index: 10;
+}
+
+/* Configuración específica para Tema Claro (Fondo Blanco) */
+[data-theme="light"] .mini-footer-widget {
+    background-color: #ffffff; /* Blanco puro */
+    color: #666666; /* Un gris oscuro para que se lea bien en blanco */
+    border-top: 1px solid #eeeeee;
+}
+
+/* Configuración específica para Tema Oscuro (Fondo Negro) */
+[data-theme="dark"] .mini-footer-widget {
+    background-color: #000000; /* Negro puro */
+    color: var(--text-dim);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+/* --- ESTADO COLAPSADO (Imagen 1) --- */
+#widget-billar.collapsed {
+    /* Ajustamos la altura para que quepa el header Y el footer */
+    transform: translateY(0); 
+    height: auto; 
+}
+
+#widget-billar.collapsed .widget-content {
+    display: none !important; /* Escondemos el botón de WhatsApp pero NO el footer */
+}
+
+/* --- ESTADO ABIERTO (Imagen 2) --- */
+#widget-billar:not(.collapsed) .mini-footer-widget {
+    order: 4; /* Mueve el footer al final de la lista (abajo del botón) */
+    padding-bottom: 15px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.widget-header { order: 1; }
+.widget-content { order: 3; padding: 20px 15px; }
+
+/* Estilos de texto */
+.mini-footer-widget b { color: var(--neon-cyan); }
+.mini-footer-widget .dot { color: var(--neon-fucsia); }
+
+
+/* --- CONTENEDOR DE LA CINTA --- */
+.zz-ticker-wrapper {
+    width: 100%;
+    overflow: hidden; /* Esconde lo que sale de la pantalla */
+    background: #000;
+    border-bottom: 1px solid var(--neon-cyan);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 0;
+    white-space: nowrap;
+    position: relative;    
+    /* CAMBIO CLAVE: Fixed en lugar de Sticky */
+    position: fixed;
+    top: 60px; /* Ajusta este número para que pegue justo al borde de tu header */
+    left: 0;
+    z-index: 800; 
+    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+
+/* --- ANIMACIÓN DE MOVIMIENTO --- */
+.zz-ticker {
+    display: inline-flex;
+    animation: ticker-scroll 25s linear infinite; /* Velocidad constante */
+    
+}
+
+.zz-ticker-item {
+    padding: 0 30px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    /* Efecto Neón Suave */
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+}
+
+/* Colores alternos tipo feria */
+.zz-ticker-item:nth-child(odd) {
+    color: var(--neon-cyan);
+}
+.zz-ticker-item:nth-child(even) {
+    color: var(--neon-fucsia);
+    text-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
+}
+
+/* Keyframes para el scroll infinito */
+@keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Se mueve la mitad para conectar con el clon */
+}
+
+/* --- AJUSTE PARA MODO CLARO --- */
+[data-theme="light"] .zz-ticker-wrapper {
+    background: #ffffff;
+    border-bottom: 2px solid #eee;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+[data-theme="light"] .zz-ticker-item {
+    text-shadow: none; /* Quitamos brillo en modo claro para legibilidad */
+}
+
+/* Quita el borde de enfoque que ponen los navegadores */
+.category-bar, 
+.cat-pill, 
+button, 
+.zz-ticker-wrapper {
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent; /* Quita el cuadro azul al tocar en móvil */
+    border: none; /* Si la línea es un borde real de CSS */
+}
+
+.loader {
+    color: var(--neon-cyan);
+    font-weight: bold;
+    text-shadow: 0 0 10px var(--glow-cyan);
+    letter-spacing: 2px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+/* Botón Base Bola de Billar */
+.zz-btn-top.billar-ball {
+    position: fixed;
+    bottom: 85px; /* Arriba del widget de billar */
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0) rotate(-180deg);
+    z-index: 999;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset -5px -5px 15px rgba(0,0,0,0.3);
+}
+
+.zz-btn-top.billar-ball.show {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+/* Bola 8 (Modo Claro - Fondo Negro) */
+.eight-ball {
+    background: radial-gradient(circle at 30% 30%, #444, #000);
+    color: #fff;
+}
+
+/* Bola Blanca (Modo Oscuro - Fondo Blanco) */
+.white-ball {
+    background: radial-gradient(circle at 30% 30%, #fff, #ccc);
+    color: #000;
+}
+
+/* El contenido (el triángulo) dentro del círculo blanco central de la bola */
+.ball-content {
+    background: white;
+    color: black;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Ajuste para la bola blanca (triángulo invertido en círculo negro) */
+.white-ball .ball-content {
+    background: #000;
+    color: #fff;
+}
+
+.zz-btn-top.billar-ball:hover {
+    transform: scale(1.1) translateY(-5px);
+}
+
+
+/* El fondo oscuro del modal */
+.modal {
+
+    display: none; 
+    position: fixed; 
+    z-index: 5000; /* Subimos este valor al máximo */
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.85); /* Un poco más oscuro para que no se vea lo de atrás */
+    backdrop-filter: blur(8px);
+
+    justify-content: center;
+    align-items: flex-start; /* CAMBIO: Alinea al inicio para que el scroll empiece arriba */
+    
+    overflow-y: auto; /* PERMITE EL SCROLL VERTICAL */
+    padding: 30px 0;  /* Espacio arriba y abajo para que no pegue al borde */
+}
+
+/* La tarjeta blanca/oscura interna */
+.modal-content {
+    background: var(--surface);
+    width: 90%;
+    max-width: 500px;
+    max-height: none;
+    margin: auto; /* Centra la tarjeta */
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Quitamos el height fijo si lo tuviera para que crezca con el contenido */
+    height: auto; 
+}
+
+/* Asegúrate de que la imagen no sea gigante en pantallas pequeñas */
+.modal-img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 35px;
+    color: var(--text-main);
+    cursor: pointer;
+    z-index: 5010; /* Un nivel arriba del contenido */
+    background: rgba(0,0,0,0.5); /* Fondo oscuro para que se vea sobre la imagen */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.modal-info { padding: 20px; }
+
+.modal-nombre { font-size: 1.5rem; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
+
+.modal-descripcion { 
+    font-size: 1rem; color: var(--text-dim); 
+    margin-bottom: 20px; line-height: 1.4;
+}
