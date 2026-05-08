@@ -18,6 +18,31 @@ function App() {
   const [isDark, setIsDark] = useState(true);
   const [loading, setLoading] = useState(true);
 
+  //instalar con qr pwa
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    // Capturamos el evento de instalación que lanza el navegador
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    });
+  }, []);
+
+  const handleInstallClick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        setDeferredPrompt(null);
+      }
+    } else {
+      // Si no se puede instalar automáticamente (como en iPhone), 
+      // mostramos un aviso de cómo hacerlo manualmente
+      alert("Para instalar: Dale al botón 'Compartir' y luego 'Agregar a inicio' 📲");
+    }
+  }; // fin codigo para instalar pwa
+
   const fetchData = async () => {
     try {
       const res = await fetch(URL_API);
@@ -44,7 +69,28 @@ function App() {
     : datos.menu.filter(p => p.categoria === categoria);
 
   return (
+    <>
     <div className="app-container">
+      {deferredPrompt && (
+        <button 
+          onClick={handleInstallClick}
+          className="btn-instalar-qr"
+          style={{
+            position: 'fixed',
+            top: '80px',
+            right: '20px',
+            zIndex: 10000,
+            background: 'var(--neon-cyan)',
+            color: 'black',
+            padding: '10px 20px',
+            borderRadius: '25px',
+            fontWeight: 'bold',
+            boxShadow: '0 0 15px var(--glow-cyan)'
+          }}
+        >
+          ✨ INSTALAR APP
+        </button>
+      )}
       <Header isDark={isDark} toggleTheme={toggleTheme} />
       <Ticker />
       {!loading && (
@@ -98,6 +144,7 @@ function App() {
       <ScrollTop isDark={isDark} />
       <BillarWidget estado={datos.estadoMesa} />
     </div>
+    </>
   );
 }
 
