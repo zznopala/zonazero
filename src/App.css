@@ -889,3 +889,41 @@ button,
     font-size: 1rem; color: var(--text-dim); 
     margin-bottom: 20px; line-height: 1.4;
 }
+
+
+/* Contenedor para que el botón no flote sobre el contenido importante */
+.install-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background: #000; /* Fondo negro para que combine */
+}
+
+.btn-instalar-footer {
+    background: #00ffff; /* Tu Cian Neón */
+    color: #000;
+    border: none;
+    padding: 12px 25px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    transition: all 0.3s ease;
+    border: 1px solid white;
+}
+
+.btn-instalar-footer:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
+}
+
+/* Si quieres que aparezca fijo justo arriba del widget del billar */
+@media (max-width: 768px) {
+    .install-container {
+        position: relative; 
+        margin-bottom: 100px; /* Esto empuja el contenido hacia arriba para que el Widget no lo tape */
+    }
+}

@@ -20,12 +20,27 @@ function App() {
 
   //instalar con qr pwa
   const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    // 1. Detectar si ya se está ejecutando como App instalada
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+      setIsInstalled(true);
+    }
 
   useEffect(() => {
     // Capturamos el evento de instalación que lanza el navegador
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
+    });
+  }, []);
+
+  // 3. Detectar cuando se acaba de instalar
+    window.addEventListener('appinstalled', () => {
+      setIsInstalled(true);
+      setDeferredPrompt(null);
+      console.log('ZONAZERO instalada con éxito');
     });
   }, []);
 
@@ -71,26 +86,6 @@ function App() {
   return (
     <>
     <div className="app-container">
-      {deferredPrompt && (
-        <button 
-          onClick={handleInstallClick}
-          className="btn-instalar-qr"
-          style={{
-            position: 'fixed',
-            top: '80px',
-            right: '20px',
-            zIndex: 10000,
-            background: 'var(--neon-cyan)',
-            color: 'black',
-            padding: '10px 20px',
-            borderRadius: '25px',
-            fontWeight: 'bold',
-            boxShadow: '0 0 15px var(--glow-cyan)'
-          }}
-        >
-          ✨ INSTALAR APP
-        </button>
-      )}
       <Header isDark={isDark} toggleTheme={toggleTheme} />
       <Ticker />
       {!loading && (
@@ -142,6 +137,28 @@ function App() {
         onClose={() => setProductoSeleccionado(null)} 
       />
       <ScrollTop isDark={isDark} />
+      {deferredPrompt && !isInstalled && (
+        <div className="install-container">
+          <button 
+            onClick={handleInstallClick}
+            className="btn-instalar-footer"
+            style={{
+              position: 'fixed',
+              top: '80px',
+              right: '20px',
+              zIndex: 10000,
+              background: 'var(--neon-cyan)',
+              color: 'black',
+              padding: '10px 20px',
+              borderRadius: '25px',
+              fontWeight: 'bold',
+              boxShadow: '0 0 15px var(--glow-cyan)'
+            }}
+          >
+            ✨ INSTALAR APP
+          </button>
+        </div>
+      )}
       <BillarWidget estado={datos.estadoMesa} />
     </div>
     </>
