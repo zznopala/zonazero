@@ -22,6 +22,20 @@ function App() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isInstalled, setIsInstalled] = useState(false);
 
+  // Este efecto se dispara CADA VEZ que la categoría cambia
+useEffect(() => {
+  // Le damos 100ms para que React termine de filtrar los productos
+  // y luego hacemos el scroll suave.
+  const timeoutId = setTimeout(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, 100);
+
+  return () => clearTimeout(timeoutId); // Limpiamos el timer al desmontar
+}, [categoria]);
+
   useEffect(() => {
     // 1. Detectar si ya es standalone
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
@@ -88,6 +102,9 @@ function App() {
     ? datos.menu 
     : datos.menu.filter(p => p.categoria === categoria);
 
+  // Variable auxiliar para el control de títulos
+  let ultimaCategoria = null;
+
   return (
     <>
     <div className="app-container">
@@ -104,7 +121,7 @@ function App() {
           </>
         )}
       <main className="container">
-        <div className="grid-productos" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '15px', padding: '15px' }}>
+        <div className="grid-productos" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '15px' }}>
           {loading ? (
              <div style={{ 
                 gridColumn: '1 / -1', 
@@ -117,23 +134,36 @@ function App() {
                 <div className="loader">Iniciando sistema...</div>
               </div>
           ) : (
-            menuFiltrado.map((p, i) => (
-              <div 
-                key={i} 
-                className="producto-card" 
-                onClick={() => setProductoSeleccionado(p)} // 2. Al hacer clic, guardamos el producto
-                style={{ background: 'var(--surface)', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer' }}
-              >
-                {/* ... Contenido de la card (imagen, nombre, precio) ... */}
-                <img src={p.imagen} alt={p.nombre} style={{ width: '100%', height: '140px', objectFit: 'cover' }}/>
-                <div style={{ padding: '10px' }}>
-                  <h3 style={{ fontSize: '1rem', margin: '0' }}>{p.nombre}</h3>
-                              <span className="mas-info-link">Más información →</span>
+            menuFiltrado.map((p, i) => {
+              // --- LÓGICA DE TÍTULOS ---
+              const mostrarTitulo = p.categoria !== ultimaCategoria;
+              ultimaCategoria = p.categoria;
+              // -------------------------
+              return (
+                <React.Fragment key={i}>
+                  {mostrarTitulo && (
+                    <h2 className="titulo-categoria-separador" style={{ gridColumn: '1 / -1', margin: '0px' }}>
+                      {p.categoria}
+                    </h2>
+                  )}
+                  <div 
+                    key={i} 
+                    className="producto-card" 
+                    onClick={() => setProductoSeleccionado(p)} // 2. Al hacer clic, guardamos el producto
+                    style={{ background: 'var(--surface)', borderRadius: '15px', overflow: 'hidden', cursor: 'pointer' }}
+                  >
+                    {/* ... Contenido de la card (imagen, nombre, precio) ... */}
+                    <img src={p.imagen} alt={p.nombre} style={{ width: '100%', height: '140px', objectFit: 'cover' }}/>
+                    <div style={{ padding: '10px' }}>
+                      <h3 style={{ fontSize: '1rem', margin: '0' }}>{p.nombre}</h3>
+                                  <span className="mas-info-link">Más información →</span>
 
-                  <p style={{ color: 'var(--neon-cyan)', fontWeight: 'bold' }}>${p.precio}</p>
-                </div>
-              </div>
-            ))
+                      <p style={{ color: 'var(--neon-cyan)', fontWeight: 'bold' }}>${p.precio}</p>
+                    </div>
+                  </div>
+                </React.Fragment>
+            )
+            })
           )}
         </div>
       </main>
