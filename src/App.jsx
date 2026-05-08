@@ -23,25 +23,30 @@ function App() {
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    // 1. Detectar si ya se está ejecutando como App instalada
+    // 1. Detectar si ya es standalone
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       setIsInstalled(true);
     }
 
-  useEffect(() => {
-    // Capturamos el evento de instalación que lanza el navegador
-    window.addEventListener('beforeinstallprompt', (e) => {
+    // 2. Evento para capturar la instalación
+    const handleBeforeInstall = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
-    });
-  }, []);
+    };
 
-  // 3. Detectar cuando se acaba de instalar
-    window.addEventListener('appinstalled', () => {
+    // 3. Evento cuando ya se instaló
+    const handleAppInstalled = () => {
       setIsInstalled(true);
       setDeferredPrompt(null);
-      console.log('ZONAZERO instalada con éxito');
-    });
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
   }, []);
 
   const handleInstallClick = async () => {
