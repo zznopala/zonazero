@@ -198,6 +198,10 @@ section {
     border: 1px solid #222;
     cursor: pointer; 
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    transform: translateY(-5px); /* Se levanta un poquito */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    
 }
 
 
@@ -760,7 +764,7 @@ button,
 /* Botón Base Bola de Billar */
 .zz-btn-top.billar-ball {
     position: fixed;
-    bottom: 85px; /* Arriba del widget de billar */
+    bottom: 140px; /* Arriba del widget de billar */
     right: 20px;
     width: 50px;
     height: 50px;
@@ -973,4 +977,100 @@ button,
     position: relative !important; /* Anulamos el fixed anterior */
     bottom: auto !important;
     width: 100%;
+}
+
+.status-container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Contenedor del botón circular */
+.whatsapp-float-new {
+  position: fixed;
+  width: 50px;  /* Tamaño ideal según tu captura */
+  height: 50px;
+  bottom: 75px; /* Lo subimos para que no choque con el widget de billar */
+  right: 20px;    /* Lado IZQUIERDO como pediste */
+  background-color: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 99999; /* Máxima prioridad visual */
+  transition: all 0.3s ease;
+  border: 2px solid white;
+}
+
+/* La imagen dentro del botón */
+.whatsapp-img-icon {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+/* Efecto al pasar el mouse o tocarlo */
+.whatsapp-float-new:hover {
+  transform: scale(1.1);
+  background-color: #128c7e;
+  box-shadow: 0px 0px 20px rgba(37, 211, 102, 0.6);
+}
+
+/* Ajuste para celulares */
+@media (max-width: 600px) {
+  .whatsapp-float-new {
+    width: 50px;
+    height: 50px;
+    bottom: 85px; /* Un poco más arriba en móvil por el menú del navegador */
+    right: 20px;
+  }
+  .whatsapp-img-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.floating-controls-wrapper {
+  position: fixed;
+  /* Lado izquierdo como pediste */
+  right: 20px; 
+  /* Altura suficiente para que no tape el widget de billar inferior */
+  bottom: 120px; 
+  z-index: 99999;
+  
+  display: flex;
+  flex-direction: column-reverse; /* Apila hacia arriba */
+  gap: 15px; /* Espacio constante entre botones */
+  align-items: center;
+  pointer-events: none; /* Evita que el contenedor invisible bloquee clics */
+}
+
+/* Permitimos clics solo en los botones reales */
+.floating-controls-wrapper a, 
+.floating-controls-wrapper button {
+  pointer-events: auto;
+}
+
+.btn-whatsapp-float {
+  width: 55px;
+  height: 55px;
+  background-color: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  border: 2px solid white;
+  transition: transform 0.3s ease;
+}
+
+.btn-whatsapp-float img {
+  width: 32px;
+  height: 32px;
 }

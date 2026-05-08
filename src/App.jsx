@@ -17,6 +17,7 @@ function App() {
   const [productoSeleccionado, setProductoSeleccionado] = useState(null);
   const [isDark, setIsDark] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [errorConexion, setErrorConexion] = useState(false);
 
   //instalar con qr pwa
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -78,12 +79,27 @@ useEffect(() => {
   }; // fin codigo para instalar pwa
 
   const fetchData = async () => {
-    try {
+    // Creamos un temporizador que se activa si tarda mucho
+    const timeout = setTimeout(() => {
+      if (loading) {
+        setErrorConexion(true);
+        setLoading(false);
+      }
+    }, 8000); // 8 segundos de espera
+
+    try {      
       const res = await fetch(URL_API);
       const json = await res.json();
       setDatos(json);
+      setErrorConexion(false); // Si llega aquí, todo está bien
       setLoading(false);
-    } catch (e) { console.error("Error:", e); }
+    } catch (e) { 
+        setErrorConexion(true);
+        setLoading(false);
+    } finally {
+      clearTimeout(timeout);
+    }
+  
   };
 
   useEffect(() => {
@@ -133,7 +149,28 @@ useEffect(() => {
               }}>
                 <div className="loader">Iniciando sistema...</div>
               </div>
-          ) : (
+          ) : errorConexion && datos.menu.length === 0 ? (
+            /* --- SI FALLA Y NO HAY DATOS GUARDADOS --- */
+            <div className="status-container">
+              <span style={{ fontSize: '3rem' }}>📡</span>
+              <h3 style={{ color: 'white' }}>Sin conexión a internet</h3>
+              <p style={{ color: 'gray' }}>No pudimos cargar el menú de ZONAZERO</p>
+              <button 
+                onClick={() => { setLoading(true); fetchData(); }}
+                style={{
+                  marginTop: '20px',
+                  padding: '10px 20px',
+                  background: 'var(--neon-cyan)',
+                  border: 'none',
+                  borderRadius: '20px',
+                  fontWeight: 'bold'
+                }}
+              >
+                REINTENTAR
+              </button>
+            </div>
+          )     
+          : (
             menuFiltrado.map((p, i) => {
               // --- LÓGICA DE TÍTULOS ---
               const mostrarTitulo = p.categoria !== ultimaCategoria;
@@ -171,7 +208,21 @@ useEffect(() => {
         producto={productoSeleccionado} 
         onClose={() => setProductoSeleccionado(null)} 
       />
-      <ScrollTop isDark={isDark} />
+      <div className="floating-controls-wrapper">
+        <ScrollTop isDark={isDark} />
+        <a 
+          href="https://wa.me/529541336440?text=Hola%20ZONAZERO,%20me%20gustaría%20hacer%20un%20pedido%20o%20una%20consulta." 
+          className="whatsapp-float-new" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+            alt="WhatsApp" 
+            className="whatsapp-img-icon"
+          />
+        </a>
+      </div>
       <div className="fixed-bottom-area">
       
       {/* 1. Botón de Instalar (Aparece si no está instalada) */}
@@ -185,8 +236,15 @@ useEffect(() => {
 
       {/* 2. Widget de Billar (Aparecerá aquí cuando cargue) */}
       <BillarWidget estado={datos.estadoMesa} />
-      
-    </div>
+      <div className="mini-footer-widget">
+        <span>© 2026 <b>ZONAZERO</b></span>
+        <span className="dot">•</span>
+        <span>📍 Santos Reyes Nopala</span>
+        <span className="dot">•</span>
+        <span>Av. Hidalgo S/N BARRIO EL MIRADOR A 100M DEL PANTEÓN MUNICIPAL</span>
+      </div>
+      </div>
+      {/* BOTÓN FLOTANTE DE WHATSAPP (Corregido) */}
     </div>
     </>
   );

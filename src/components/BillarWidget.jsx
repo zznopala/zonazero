@@ -20,17 +20,9 @@ const BillarWidget = ({ estado }) => {
         <span id="texto-estado">
           {esDisponible ? 'Mesa De Billar Disponible' : 'Mesa De Billar Ocupada'}
         </span>
+  
         <span id="widget-icon">{collapsed ? '▲' : '▼'}</span>
       </div>
-
-      
-      <div className="mini-footer-widget">
-        <span>© 2026 <b>ZONAZERO</b></span>
-        <span className="dot">•</span>
-        <span>📍 Santos Reyes Nopala</span>
-        <span className="dot">•</span>
-        <span>Av. Hidalgo S/N BARRIO EL MIRADOR A 100M DEL PANTEÓN MUNICIPAL</span>
-    </div>
 
       {!collapsed && (
         <div className="widget-content">
