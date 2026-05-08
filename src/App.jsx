@@ -147,18 +147,7 @@ function App() {
           <button 
             onClick={handleInstallClick}
             className="btn-instalar-footer"
-            style={{
-              position: 'fixed',
-              top: '80px',
-              right: '20px',
-              zIndex: 10000,
-              background: 'var(--neon-cyan)',
-              color: 'black',
-              padding: '10px 20px',
-              borderRadius: '25px',
-              fontWeight: 'bold',
-              boxShadow: '0 0 15px var(--glow-cyan)'
-            }}
+            
           >
             ✨ INSTALAR APP
           </button>

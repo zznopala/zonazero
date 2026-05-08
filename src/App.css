@@ -150,8 +150,7 @@ header {
 }
 
 .cat-pill.active {
-    background: var(--neon-fucsia);
-    border-color: var(--neon-fucsia);
+    background: #0084ff;
     color: white;
     box-shadow: var(--glow-fucsia);
 }
