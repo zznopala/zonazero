@@ -926,3 +926,51 @@ button,
         margin-bottom: 100px; /* Esto empuja el contenido hacia arriba para que el Widget no lo tape */
     }
 }
+
+/* Contenedor padre que agrupa todo lo fijo abajo */
+.fixed-bottom-area {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column; /* Apila los elementos hacia arriba */
+    pointer-events: none; /* Permite tocar lo que hay detrás si el área es grande */
+}
+
+/* Hacemos que los hijos sí reciban clics */
+.fixed-bottom-area > div, 
+.fixed-bottom-area > button,
+.fixed-bottom-area > nav {
+    pointer-events: auto;
+}
+
+/* Estilo para la barra del botón */
+.install-bar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8); /* Fondo oscuro para que no se pierda */
+    padding: 10px 0;
+    border-top: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.btn-instalar-footer {
+    background: #00ffff;
+    color: #000;
+    border: none;
+    padding: 8px 20px;
+    font-weight: bold;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    box-shadow: 0 0 10px #00ffff;
+    cursor: pointer;
+}
+
+/* Ajuste para el Widget de Billar para que no tenga posición fixed propia */
+#widget-billar {
+    position: relative !important; /* Anulamos el fixed anterior */
+    bottom: auto !important;
+    width: 100%;
+}

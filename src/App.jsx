@@ -142,18 +142,21 @@ function App() {
         onClose={() => setProductoSeleccionado(null)} 
       />
       <ScrollTop isDark={isDark} />
+      <div className="fixed-bottom-area">
+      
+      {/* 1. Botón de Instalar (Aparece si no está instalada) */}
       {deferredPrompt && !isInstalled && (
-        <div className="install-container">
-          <button 
-            onClick={handleInstallClick}
-            className="btn-instalar-footer"
-            
-          >
-            ✨ INSTALAR APP
+        <div className="install-bar">
+          <button onClick={handleInstallClick} className="btn-instalar-footer">
+            ✨ INSTALAR APP ZONAZERO
           </button>
         </div>
       )}
+
+      {/* 2. Widget de Billar (Aparecerá aquí cuando cargue) */}
       <BillarWidget estado={datos.estadoMesa} />
+      
+    </div>
     </div>
     </>
   );
