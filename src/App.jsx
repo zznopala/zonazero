@@ -211,7 +211,7 @@ useEffect(() => {
       <div className="floating-controls-wrapper">
         <ScrollTop isDark={isDark} />
         <a 
-          href="https://wa.me/529541336440?text=Hola%20ZONAZERO,%20me%20gustaría%20hacer%20un%20pedido%20o%20una%20consulta." 
+          href="https://wa.me/529541336440?text=Hola%20ZONAZERO,%20me%20gustaría%20hacer%20una%20consulta." 
           className="whatsapp-float-new" 
           target="_blank" 
           rel="noopener noreferrer"
