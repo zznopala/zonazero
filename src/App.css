@@ -522,13 +522,6 @@ input[type="datetime-local"] {
     display: none;
 }
 
-/* --- ESTILOS PARA CELULAR --- */
-@media (max-width: 480px) {
-    .zz-banner-container {
-        justify-content: center;
-    }
-}
-
 
 .promo-card:active {
     transform: scale(0.98); /* Efecto visual de pulsado */
