@@ -6,6 +6,7 @@ import BillarWidget from './components/BillarWidget';
 import ScrollTop from './components/ScrollTop';
 import ProductModal from './components/ProductModal';
 import PromoBanner from './components/PromoBanner';
+import AnnouncementModal from './components/AnnouncementModal';
 
 import './App.css';
 
@@ -18,6 +19,7 @@ function App() {
   const [isDark, setIsDark] = useState(true);
   const [loading, setLoading] = useState(true);
   const [errorConexion, setErrorConexion] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   //instalar con qr pwa
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -91,6 +93,13 @@ useEffect(() => {
       const res = await fetch(URL_API);
       const json = await res.json();
       setDatos(json);
+      // Lógica para el Aviso
+      if (json.aviso && json.aviso.activo === 'SI') {
+        const hasSeen = sessionStorage.getItem('announcementSeen');
+        if (!hasSeen) {
+          setShowModal(true);
+        }
+      }
       setErrorConexion(false); // Si llega aquí, todo está bien
       setLoading(false);
     } catch (e) { 
@@ -104,7 +113,7 @@ useEffect(() => {
 
   useEffect(() => {
     fetchData();
-    const interval = setInterval(fetchData, 60000); // Actualiza cada minuto
+    const interval = setInterval(fetchData, 120000); // Actualiza cada minuto
     return () => clearInterval(interval);
   }, []);
 
@@ -236,6 +245,12 @@ useEffect(() => {
 
       {/* 2. Widget de Billar (Aparecerá aquí cuando cargue) */}
       <BillarWidget estado={datos.estadoMesa} />
+      {showModal && datos.aviso && (
+        <AnnouncementModal 
+          aviso={datos.aviso} 
+          onClose={() => setShowModal(false)} 
+        />
+      )}
       <div className="mini-footer-widget">
         <span>© 2026 <b>ZONAZERO</b></span>
         <span className="dot">•</span>
