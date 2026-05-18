@@ -516,11 +516,17 @@ input[type="datetime-local"] {
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth; /* Movimiento suave global */
     margin-top: 20px;
-    justify-content: center;
 }
 
 .zz-banner-container::-webkit-scrollbar {
     display: none;
+}
+
+/* --- ESTILOS PARA CELULAR --- */
+@media (max-width: 480px) {
+    .zz-banner-container {
+        justify-content: center;
+    }
 }
 
 
